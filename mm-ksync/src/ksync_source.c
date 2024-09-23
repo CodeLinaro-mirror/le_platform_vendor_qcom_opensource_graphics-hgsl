@@ -103,7 +103,7 @@ static void ksync_source_cleanup(struct ksync_priv *dev_priv,
 	spin_lock_irqsave(&syncsource->lock, flags);
 
 	list_for_each_entry_safe(fence, next,
-                &syncsource->source_list_head,
+				&syncsource->source_list_head,
 				source_link) {
 		dma_fence_signal_locked(&fence->base);
 		list_del_init(&fence->source_link);
@@ -192,7 +192,7 @@ long ksync_ioctl_source_create_fence(struct ksync_priv *dev_priv,
 
 	spin_lock_irqsave(&syncsource->lock, flags);
 	list_add_tail(&fence->source_link,
-            &syncsource->source_list_head);
+			&syncsource->source_list_head);
 	spin_unlock_irqrestore(&syncsource->lock, flags);
 
 	trace_ksync_source_fence_create(fence);
@@ -227,7 +227,7 @@ static int ksync_source_signal(struct ksync_source *syncsource,
 	spin_lock_irqsave(&syncsource->lock, flags);
 
 	list_for_each_entry_safe(fence, next,
-                &syncsource->source_list_head,
+				&syncsource->source_list_head,
 				source_link) {
 		if (base == &fence->base) {
 			dma_fence_signal_locked(base);

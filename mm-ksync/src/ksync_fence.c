@@ -1,4 +1,3 @@
-// SPDX-License-Ideksync_ntifier: GPL-2.0-only
 /*
  * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
  * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
@@ -35,7 +34,7 @@ struct ksync_fence *ksync_alloc_fence(
 	fence->seqno = seqno;
 	fence->flag = flag;
 	dma_fence_init(&fence->base, &ksync_fence_ops,
-                &timeline->lock, timeline->ksync_ctx, seqno);
+		&timeline->lock, timeline->ksync_ctx, seqno);
 	INIT_LIST_HEAD(&fence->link);
 	spin_lock_irq(&timeline->lock);
 	if (!dma_fence_is_signaled_locked(&fence->base))
@@ -48,7 +47,7 @@ struct ksync_fence *ksync_alloc_fence(
 	return fence;
 }
 
-struct ksync_fence *to_ksync_fence(struct dma_fence* base)
+struct ksync_fence *to_ksync_fence(struct dma_fence *base)
 {
 	struct ksync_fence *fence = NULL;
 
@@ -69,8 +68,8 @@ void ksync_forward(struct ksync_timeline *timeline,
 {
 	struct ksync_fence *cur, *next;
 	struct list_head signalled;
-	INIT_LIST_HEAD(&signalled);
 
+	INIT_LIST_HEAD(&signalled);
 	spin_lock_irq(&timeline->lock);
 
 	if (!force) {
@@ -82,7 +81,7 @@ void ksync_forward(struct ksync_timeline *timeline,
 	}
 
 	spin_lock(&timeline->fence_lock);
-	list_for_each_entry_safe(cur, next,	&timeline->fence_list, link) {
+	list_for_each_entry_safe(cur, next, &timeline->fence_list, link) {
 		if ((force ||
 			ksync_seqno_is_later(seqno, cur->seqno, timeline->is64)) &&
 			dma_fence_get_rcu(&cur->base)) {
@@ -146,7 +145,7 @@ static struct dma_fence *ksync_fence_array_create(
 	}
 
 	fences = kcalloc(count, sizeof(*fences),
-		GFP_KERNEL | __GFP_NORETRY |__GFP_NOWARN |__GFP_ZERO);
+		GFP_KERNEL | __GFP_NORETRY | __GFP_NOWARN | __GFP_ZERO);
 	if (!fences) {
 		out_fence = ERR_PTR(-ENOMEM);
 		goto out;
@@ -330,7 +329,7 @@ static void ksync_fence_release(struct dma_fence *base)
 	spin_lock_irqsave(&timeline->fence_lock, flags);
 	/* If the fence is still on the active list, remove it */
 	list_for_each_entry_safe(cur, next,
-                &timeline->fence_list, link) {
+			&timeline->fence_list, link) {
 		if (fence == cur) {
 			list_del_init(&fence->link);
 			rb_erase(&fence->rb_node, &timeline->rb_tree);
@@ -344,7 +343,7 @@ static void ksync_fence_release(struct dma_fence *base)
 
 out:
 	dma_fence_free(base);
-    return;
+	return;
 }
 
 static void ksync_fence_value_str(struct dma_fence *base,
@@ -376,7 +375,7 @@ static const struct dma_fence_ops ksync_fence_ops = {
 	.signaled = ksync_is_signaled,
 	.release = ksync_fence_release,
 	.fence_value_str = ksync_fence_value_str,
-    .timeline_value_str = ksync_timeline_value_str,
+	.timeline_value_str = ksync_timeline_value_str,
 };
 
 long ksync_ioctl_fence_create(struct ksync_priv *dev_priv,

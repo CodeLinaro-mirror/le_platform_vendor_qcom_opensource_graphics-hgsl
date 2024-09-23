@@ -28,7 +28,7 @@ struct ksync_fence {
 	u32 flag;
 };
 
-struct ksync_fence *to_ksync_fence(struct dma_fence* base);
+struct ksync_fence *to_ksync_fence(struct dma_fence *base);
 
 void ksync_forward(struct ksync_timeline *timeline,
 				u64 seqno, s32 force);

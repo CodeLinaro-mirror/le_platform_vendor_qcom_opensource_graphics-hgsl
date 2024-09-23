@@ -22,7 +22,6 @@
 #include <linux/mutex.h>
 #include <linux/delay.h>
 
-#define KSYNC_READ_MESSAGE "HI ksync\n"
 #define KSYNC_DEVICE_NAME  "ksync"
 
 #define KSYNC_DEV_NUM  (1)
@@ -37,8 +36,6 @@ struct qcom_ksync {
 	dev_t device_no;
 	struct class *driver_class;
 	struct device *class_dev;
-
-	struct hw_version *ver;
 
 	struct mutex mutex;
 	struct list_head process_list;
@@ -69,9 +66,9 @@ struct ksync_priv {
 };
 
 long ksync_ioctl(struct file *filep,
-                    u32 cmd, unsigned long arg);
+			u32 cmd, unsigned long arg);
 long ksync_compat_ioctl(struct file *filep,
-                    u32 cmd, unsigned long arg);
+			u32 cmd, unsigned long arg);
 
 /**
  * ksync_seqno_is_later - return if f1 is chronologically later than f2

@@ -1,4 +1,3 @@
- // SPDX-License-Identifier: GPL-2.0-only
 /*
  * Copyright (c) 2008-2021, The Linux Foundation. All rights reserved.
  * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
@@ -68,7 +67,7 @@ long ksync_ioctl_copy_out(u32 kernel_cmd, u32 user_cmd,
 	u32 copy = ksize < usize ? ksize : usize;
 
 	if ((kernel_cmd & IOC_OUT) && (user_cmd & IOC_OUT) &&
-            kernel_cmd != KSYNC_IOCTL_TIMELINE_QUERY) {
+			kernel_cmd != KSYNC_IOCTL_TIMELINE_QUERY) {
 		if (copy > 0 && copy_to_user((void __user *) arg, ptr, copy))
 			return -EFAULT;
 	}

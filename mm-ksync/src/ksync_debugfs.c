@@ -46,7 +46,7 @@ static void ksync_print_fence(struct seq_file *s,
 			     struct dma_fence *base, bool show)
 {
 	struct ksync_timeline *timeline =
-		((struct ksync_fence*)base)->timeline;
+		((struct ksync_fence *)base)->timeline;
 	int status;
 
 	status = dma_fence_get_status_locked(base);

@@ -14,12 +14,19 @@
 /**
  * struct ksync_timeline - A ksync timeline
  * @kref: Refcount to keep the struct alive
- * @name: String to describe this timeline
- * @fence_context: Used by the fence driver to identify fences belonging to
- *		   this context
- * @fence_list: List head for all fences on this timeline
  * @lock: Spinlock to protect this timeline
+ * @fence_lock: Spinlock to protect fence_list
+ * @name: String to describe this timeline
+ * @id: timeline id
+ * @ksync_ctx: Used by the fence driver to identify fences belonging to
+ *		   this context
+ * @free_node: Node of the released timeline
+ * @fence_list: List head for all fences on this timeline
+ * @rb_tree: rb tree of the fences
+ * @dev_priv: per-process private data
  * @signaled_seqno: Last timestamp when signaling fences
+ * @flag: reserved for fulture use
+ * @is64: 32bit or 64bit seqno
  */
 struct ksync_timeline {
 	struct kref kref;

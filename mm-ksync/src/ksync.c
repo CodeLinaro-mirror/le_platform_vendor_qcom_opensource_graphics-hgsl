@@ -126,18 +126,10 @@ static s32 ksync_release(struct inode *inodep, struct file *filep)
 	return 0;
 }
 
-static ssize_t ksync_read(struct file *filep,
-		char __user *buf, size_t count, loff_t *pos)
-{
-	return simple_read_from_buffer(buf, count, pos,
-			KSYNC_READ_MESSAGE, strlen(KSYNC_READ_MESSAGE) + 1);
-}
-
 static const struct file_operations ksync_fops = {
 	.owner = THIS_MODULE,
 	.open = ksync_open,
 	.release = ksync_release,
-	.read = ksync_read,
 	.unlocked_ioctl = ksync_ioctl,
 	.compat_ioctl = ksync_compat_ioctl
 };

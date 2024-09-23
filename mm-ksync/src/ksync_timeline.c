@@ -122,7 +122,7 @@ void ksync_timeline_add_fence(struct ksync_timeline *timeline,
 			}
 			p = &parent->rb_left;
 		} else if (ksync_seqno_is_later(fence->seqno,
-                node->seqno, timeline->is64)) {
+				node->seqno, timeline->is64)) {
 			p = &parent->rb_right;
 		} else {
 			p = &parent->rb_left;
@@ -209,7 +209,7 @@ void ksync_timeline_value_str(struct dma_fence *base,
 	}
 
 	snprintf(str, size, "Last retired seqno:%llu",
-            timeline->signaled_seqno);
+			timeline->signaled_seqno);
 	ksync_timeline_put(timeline);
 out:
 	return;
@@ -305,23 +305,23 @@ long ksync_ioctl_timeline_query(
 	addr = param->timelines;
 	for (i = 0; i < param->count; i++) {
 		if (copy_struct_from_user(&data, sizeof(data),
-                    u64_to_user_ptr(addr),
-                    param->timelines_size)) {
+				u64_to_user_ptr(addr),
+				param->timelines_size)) {
 			ret = -EFAULT;
 			goto out;
 		}
 
 		if (data.padding) {
-            ret = -EINVAL;
-            goto out;
-        }
+			ret = -EINVAL;
+			goto out;
+		}
 
 		ret = ksync_query(dev_priv, data.id, &data.seqno);
 		if (ret)
 			goto out;
 
 		if (copy_to_user(u64_to_user_ptr(addr),
-                    &data, sizeof(data))) {
+				&data, sizeof(data))) {
 			ret = -EFAULT;
 			goto out;
 		}

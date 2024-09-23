@@ -6,7 +6,7 @@ LINUXINCLUDE += -I$(KSYNC_PATH)/include \
                 -I$(KERNEL_SRC)/include \
 		-I$(KERNEL_SRC)/include/uapi/linux
 
-EXTRA_CFLAGS += -DCONFIG_QCOM_KSYNC=1 \
+ccflags-y += -DCONFIG_QCOM_KSYNC=1 \
                 -Iinclude/linux \
 
 obj-m += qcom_ksync.o
