@@ -1,7 +1,7 @@
 // SPDX-License-Ideksync_ntifier: GPL-2.0-only
 /*
  * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
- * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
  */
 
 #include <linux/types.h>
@@ -166,7 +166,7 @@ static struct dma_fence *ksync_fence_array_create(
 		timeline = ksync_timeline_get_by_id(dev_priv, data.id);
 		if (!timeline) {
 			ret = -EINVAL;
-			goto out;
+			goto err;
 		}
 
 		fence = ksync_alloc_fence(timeline,
@@ -174,7 +174,7 @@ static struct dma_fence *ksync_fence_array_create(
 		ksync_timeline_put(timeline);
 		if (IS_ERR_OR_NULL(fence)) {
 			ret = -ENOMEM;
-			goto out;
+			goto err;
 		}
 
 		fences[i] = &fence->base;

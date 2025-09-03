@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
  * Copyright (c) 2019-2022, The Linux Foundation. All rights reserved.
- * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
  */
 
 #include <linux/async.h>
@@ -225,6 +225,7 @@ static s32 qcom_ksync_probe(struct platform_device *pdev)
 		return ret;
 	}
 
+	mutex_init(&ksync->mutex);
 	INIT_LIST_HEAD(&ksync->process_list);
 
 	idr_init(&ksync->timeline_idr);
